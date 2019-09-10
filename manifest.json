@@ -8,8 +8,8 @@
     "name": "Simon Freyn",
     "url": "https://simon-frey.eu/"
   },
-  "description": "Load webpages faster by preloading subsequent pages via the instant.page script",
-  "homepage_url": "https://github.com/mdn/webextensions-examples/tree/master/beastify",
+  "description": "Load webpages faster by preloading subsequent pages via the instant.page script. Install the plugin and you will feel how your browser becomes faster.",
+  "homepage_url": "https://github.com/simonfrey/faster-pageload-web-extensions",
 
   "icons": {
     "48": "icons/launch_48.png",
