@@ -16,9 +16,14 @@ function setImgLazyLoad(result) {
         if (entry.isIntersecting) {
           // custom function that copies the path to the img
           // from data-src to src
-          entry.target.src = entry.target.getAttribute("data-src-fasterpageload");
+          entry.target.src = entry.target.getAttribute(
+            "data-src-fasterpageload"
+          );
           entry.target.removeAttribute("data-src-fasterpageload");
-          console.log("faster pageload plugin: Lazy loaded image: ",entry.target.src);
+          console.log(
+            "faster pageload plugin: Lazy loaded image: ",
+            entry.target.src
+          );
           // the image is now in place, stop watching
           self.unobserve(entry.target);
         }
@@ -26,12 +31,14 @@ function setImgLazyLoad(result) {
     }, config);
 
     var imgElements = document.querySelectorAll("img");
-    console.log("faster pageload: Lazyload "+imgElements.length+" images")
+    console.log("faster pageload: Lazyload " + imgElements.length + " images");
 
     for (const imgElem of imgElements) {
-      imgElem.setAttribute("data-src-fasterpageload", imgElem.src);
-      imgElem.src = "";
-      obst.observe(imgElem);
+      if (imgElem.src != undefined && imgElem.src != "" && imgElem.getAttribute("data-src") == null && imgElem.src.includes("data:") == false ) {
+        imgElem.setAttribute("data-src-fasterpageload", imgElem.src);
+        imgElem.src = "";
+        obst.observe(imgElem);
+      }
     }
   }
 }
