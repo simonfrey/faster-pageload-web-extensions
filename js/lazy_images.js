@@ -34,7 +34,7 @@ function setImgLazyLoad(result) {
     console.log("faster pageload: Lazyload " + imgElements.length + " images");
 
     for (const imgElem of imgElements) {
-      if (imgElem.src != undefined && imgElem.src != "" && imgElem.getAttribute("data-src") == null && imgElem.src.includes("data:") == false ) {
+      if (imgElem.src != undefined && imgElem.src != "" &&  Object.keys(imgElem.dataset).length == 0 && imgElem.src.includes("data:") == false ) {
         imgElem.setAttribute("data-src-fasterpageload", imgElem.src);
         imgElem.src = "";
         obst.observe(imgElem);
