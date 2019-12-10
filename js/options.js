@@ -13,16 +13,10 @@ function saveOptions(e) {
 
 function restoreOptions() {
     function setPreloadViewport(result) {
-        preloadViewportElement.checked = result.preloadViewport || false;
-        if (result.preloadViewport == undefined){
-            preloadViewportElement.checked = true;
-        }
+        preloadViewportElement.checked = result.preloadViewport || false;     
     }
     function setImgLazyLoad(result) {
         imgLazyLoadElement.checked = result.imgLazyLoad || false;
-        if (result.imgLazyLoad == undefined){
-            imgLazyLoadElement.checked = true;
-        }
     }
 
     function onError(error) {
