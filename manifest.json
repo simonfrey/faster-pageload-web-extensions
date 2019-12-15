@@ -2,7 +2,7 @@
 
   "manifest_version": 2,
   "name": "Faster Pageload",
-  "version": "1.5.6",
+  "version": "1.5.9",
   "author": "Simon Frey",
   "developer": {
     "name": "Simon Frey",
@@ -19,11 +19,17 @@
     "page": "options.html"
   },
 
+  "background": {
+    "scripts": ["js/background.js"]
+  },
   "browser_specific_settings": {
     "gecko": {
       "id": "{73c0257e-a620-4c48-a2a8-2a9e8481a0d4}"
     }
   },
+
+  "web_accessible_resources": ["static/*"],
+
 
   "permissions":[
     "storage"

@@ -1,0 +1,22 @@
+body{
+    max-width: 1200px;
+    margin:auto;
+    padding:1em;
+    font-size: 1.2em;
+}
+
+h1,h2{
+    text-align: center;
+}
+h1 img{
+    height:1.5em;
+}
+
+ol{
+    font-size: 1.5em;
+}
+
+div{
+    border:solid 5px rebeccapurple;
+    padding:1em;
+}
