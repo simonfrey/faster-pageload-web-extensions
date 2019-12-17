@@ -21,7 +21,7 @@ function setImgLazyLoad(result) {
           );
           entry.target.removeAttribute("data-src-fasterpageload");
           console.log(
-            "faster pageload plugin: Lazy loaded image: ",
+            "[faster pageload plugin] Lazy loaded image: ",
             entry.target.src
           );
           // the image is now in place, stop watching
@@ -31,13 +31,47 @@ function setImgLazyLoad(result) {
     }, config);
 
     var imgElements = document.querySelectorAll("img");
-    console.log("faster pageload: Lazyload " + imgElements.length + " images");
+    console.log("[faster pageload plugin] Lazyload " + imgElements.length + " images");
 
-    for (const imgElem of imgElements) {
-      if (imgElem.src != undefined && imgElem.src != "" &&  Object.keys(imgElem.dataset).length == 0 && imgElem.src.includes("data:") == false ) {
+    var foundSrc = ""
+    var foundTimes = 0
+
+    for (var i = imgElements.length - 1; i >= 0; i--) {
+      var imgElem = imgElements[i];
+      if (
+        imgElem.src != undefined &&
+        imgElem.src != "" &&
+        Object.keys(imgElem.dataset).length == 0 &&
+        imgElem.src.includes("data:") == false
+      ) {
+
+        if (foundSrc != imgElem.src){
+          foundSrc = imgElem.src;
+          foundTimes = 1;
+        }else{
+          foundTimes++
+        }
+
+       
+        if (foundTimes >= 5){
+          console.log("[faster pageload plugin] Unknown lazy load plugin found. Remove lazy load elements: ", imgElements.length - 1-i)
+          // we have apparently an unknown lazy load plugin on the site. Reset all images
+          for (var j = imgElements.length - 1; j >= i; j--) {
+            var remElem = imgElements[j];
+            remElem.src = remElem.getAttribute(
+              "data-src-fasterpageload"
+            );
+            remElem.removeAttribute("data-src-fasterpageload");
+            obst.unobserve(remElem);
+          }
+          break
+
+        }else{
+      
         imgElem.setAttribute("data-src-fasterpageload", imgElem.src);
-        imgElem.src = "";
+        imgElem.src = chrome.runtime.getURL("static/icon.png");
         obst.observe(imgElem);
+        }
       }
     }
   }

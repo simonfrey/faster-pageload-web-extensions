@@ -20,7 +20,7 @@ function restoreOptions() {
     }
 
     function onError(error) {
-        alert(`faster pageload plugin: local storage error: ${error}`);
+        alert(`[faster pageload plugin] local storage error: ${error}`);
     }
     
 
