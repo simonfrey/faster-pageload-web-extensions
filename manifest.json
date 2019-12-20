@@ -1,8 +1,7 @@
 {
-
   "manifest_version": 2,
   "name": "Faster Pageload",
-  "version": "1.6",
+  "version": "1.6.5",
   "author": "Simon Frey",
   "developer": {
     "name": "Simon Frey",
@@ -29,16 +28,19 @@
   },
 
   "web_accessible_resources": ["static/*"],
+  "browser_action": {
+    "default_icon": {
+      "48": "icons/launch_48.png",
+      "96": "icons/launch_96.png"
+    },
+    "default_title": "Faster Pageload"
+  },
 
-
-  "permissions":[
-    "storage"
-  ],
+  "permissions": ["storage"],
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
-      "js": ["js/instant_page.min.js","js/lazy_images.js"]
+      "js": ["js/instant_page.min.js", "js/lazy_images.js"]
     }
   ]
-
 }

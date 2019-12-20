@@ -1,4 +1,10 @@
 function setImgLazyLoad(result) {
+  if (result.active == false){
+    console.log("[faster pageload plugin] Inactive: Do not lazy load images")
+    return
+  }
+
+
   if (result.imgLazyLoad == undefined || result.imgLazyLoad == true) {
     const config = {
       root: null, // avoiding 'root' or setting it to 'null' sets it to default value: viewport
@@ -81,4 +87,4 @@ function onError(error) {
   alert(`faster pageload plugin: local storage error: ${error}`);
 }
 
-browser.storage.sync.get("imgLazyLoad").then(setImgLazyLoad, onError);
+browser.storage.sync.get(["imgLazyLoad","active"]).then(setImgLazyLoad, onError);
