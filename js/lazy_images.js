@@ -1,3 +1,24 @@
+function IsImageOk(img) {
+  // During the onload event, IE correctly identifies any images that
+  // weren't downloaded as not complete. Others should too. Gecko-based
+  // browsers act like NS4 in that they report this incorrectly.
+  if (!img.complete) {
+      return false;
+  }
+
+  // However, they do have two very useful properties: naturalWidth and
+  // naturalHeight. These give the true size of the image. If it failed
+  // to load, either of these should be zero.
+  if (typeof img.naturalWidth != "undefined" && img.naturalWidth == 0) {
+      return false;
+  }
+
+  // No other way of checking: assume it's ok.
+  return true;
+}
+
+
+
 function setImgLazyLoad(result) {
   if (result.active == false){
     console.log("[faster pageload plugin] Inactive: Do not lazy load images")
@@ -44,6 +65,10 @@ function setImgLazyLoad(result) {
 
     for (var i = imgElements.length - 1; i >= 0; i--) {
       var imgElem = imgElements[i];
+      if (IsImageOk(imgElem)){
+        continue
+      }
+
       if (
         imgElem.src != undefined &&
         imgElem.src != "" &&
