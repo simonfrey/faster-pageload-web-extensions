@@ -103,7 +103,7 @@ function setImgLazyLoad(result) {
             imgElem.loading = "lazy"
           } else {
             imgElem.setAttribute("data-src-fasterpageload", imgElem.src);
-            imgElem.src = chrome.runtime.getURL("static/icon.png");
+            imgElem.src = chrome.runtime.getURL("static/rocket.svg");
             obst.observe(imgElem);
           }
         }

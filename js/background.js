@@ -14,7 +14,7 @@ function SetIcon(active) {
   if (active) {
     chrome.browserAction.setIcon({ path: "icons/rocket.svg" });
   } else {
-    chrome.browserAction.setIcon({ path: "icons/rocket_deactivate.svg" });
+    chrome.browserAction.setIcon({ path: "icons/rocket_da.svg" });
   }
 }
 
