@@ -12,9 +12,9 @@ browser.runtime.onInstalled.addListener(handleInstalled);
 // Set active icon
 function SetIcon(active) {
   if (active) {
-    chrome.browserAction.setIcon({ path: "icons/launch_96.png" });
+    chrome.browserAction.setIcon({ path: "icons/rocket.svg" });
   } else {
-    chrome.browserAction.setIcon({ path: "icons/launch_96_deactivate.png" });
+    chrome.browserAction.setIcon({ path: "icons/rocket_deactivate.svg" });
   }
 }
 

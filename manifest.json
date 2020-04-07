@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Faster Pageload",
-  "version": "1.7",
+  "version": "1.7.2",
   "author": "Simon Frey",
   "developer": {
     "name": "Simon Frey",
@@ -11,8 +11,8 @@
   "homepage_url": "https://github.com/simonfrey/faster-pageload-web-extensions",
 
   "icons": {
-    "48": "icons/launch_48.png",
-    "96": "icons/launch_96.png"
+    "48": "icons/rocket.svg",
+    "96": "icons/rocket.svg"
   },
   "options_ui": {
     "page": "options.html"
@@ -29,10 +29,7 @@
 
   "web_accessible_resources": ["static/*"],
   "browser_action": {
-    "default_icon": {
-      "48": "icons/launch_48.png",
-      "96": "icons/launch_96.png"
-    },
+    "default_icon":  "icons/rocket.svg",
     "default_title": "Faster Pageload"
   },
 
