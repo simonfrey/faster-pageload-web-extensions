@@ -3,14 +3,14 @@ function IsImageOk(img) {
   // weren't downloaded as not complete. Others should too. Gecko-based
   // browsers act like NS4 in that they report this incorrectly.
   if (!img.complete) {
-      return false;
+    return false;
   }
 
   // However, they do have two very useful properties: naturalWidth and
   // naturalHeight. These give the true size of the image. If it failed
   // to load, either of these should be zero.
   if (typeof img.naturalWidth != "undefined" && img.naturalWidth == 0) {
-      return false;
+    return false;
   }
 
   // No other way of checking: assume it's ok.
@@ -20,7 +20,7 @@ function IsImageOk(img) {
 
 
 function setImgLazyLoad(result) {
-  if (result.active == false){
+  if (result.active == false) {
     console.log("[faster pageload plugin] Inactive: Do not lazy load images")
     return
   }
@@ -33,9 +33,11 @@ function setImgLazyLoad(result) {
       threshold: 0.5
     };
 
+
+    var first = true;
     // register the config object with an instance
     // of intersectionObserver
-    var obst = new IntersectionObserver(function(entries, self) {
+    var obst = new IntersectionObserver(function (entries, self) {
       // iterate over each entry
       entries.forEach(entry => {
         // process just the images that are intersecting.
@@ -65,7 +67,7 @@ function setImgLazyLoad(result) {
 
     for (var i = imgElements.length - 1; i >= 0; i--) {
       var imgElem = imgElements[i];
-      if (IsImageOk(imgElem)){
+      if (IsImageOk(imgElem)) {
         continue
       }
 
@@ -76,16 +78,16 @@ function setImgLazyLoad(result) {
         imgElem.src.includes("data:") == false
       ) {
 
-        if (foundSrc != imgElem.src){
+        if (foundSrc != imgElem.src) {
           foundSrc = imgElem.src;
           foundTimes = 1;
-        }else{
+        } else {
           foundTimes++
         }
 
-       
-        if (foundTimes >= 5){
-          console.log("[faster pageload plugin] Unknown lazy load plugin found. Remove lazy load elements: ", imgElements.length - 1-i)
+
+        if (foundTimes >= 5) {
+          console.log("[faster pageload plugin] Unknown lazy load plugin found. Remove lazy load elements: ", imgElements.length - 1 - i)
           // we have apparently an unknown lazy load plugin on the site. Reset all images
           for (var j = imgElements.length - 1; j >= i; j--) {
             var remElem = imgElements[j];
@@ -97,19 +99,36 @@ function setImgLazyLoad(result) {
           }
           break
 
-        }else{
-      
-        imgElem.setAttribute("data-src-fasterpageload", imgElem.src);
-        imgElem.src = chrome.runtime.getURL("static/icon.png");
-        obst.observe(imgElem);
+        } else {
+          if(first){
+          browser.runtime.sendMessage({
+            lazyDone: false
+          });
+          first = false;
+        }
+
+          if (imgElem.loading != undefined) {
+            imgElem.loading = "lazy"
+          } else {
+            imgElem.setAttribute("data-src-fasterpageload", imgElem.src);
+            imgElem.src = chrome.runtime.getURL("static/icon.png");
+            obst.observe(imgElem);
+          }
         }
       }
     }
+
+
+
+    browser.runtime.sendMessage({
+      lazyDone: true
+    });
   }
+
 }
 
 function onError(error) {
   alert(`faster pageload plugin: local storage error: ${error}`);
 }
 
-browser.storage.sync.get(["imgLazyLoad","active"]).then(setImgLazyLoad, onError);
+browser.storage.sync.get(["imgLazyLoad", "active"]).then(setImgLazyLoad, onError);

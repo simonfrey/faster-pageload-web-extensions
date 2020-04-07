@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Faster Pageload",
-  "version": "1.6.8",
+  "version": "1.7",
   "author": "Simon Frey",
   "developer": {
     "name": "Simon Frey",
@@ -36,7 +36,10 @@
     "default_title": "Faster Pageload"
   },
 
-  "permissions": ["storage"],
+  "permissions": ["storage",
+    "webRequest",
+    "<all_urls>",
+  "webRequestBlocking"],
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
