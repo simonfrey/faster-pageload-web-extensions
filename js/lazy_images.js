@@ -34,7 +34,11 @@ function setImgLazyLoad(result) {
     };
 
 
-    var first = true;
+
+    browser.runtime.sendMessage({
+      lazyDone: false
+    });
+    
     // register the config object with an instance
     // of intersectionObserver
     var obst = new IntersectionObserver(function (entries, self) {
@@ -100,12 +104,6 @@ function setImgLazyLoad(result) {
           break
 
         } else {
-          if(first){
-          browser.runtime.sendMessage({
-            lazyDone: false
-          });
-          first = false;
-        }
 
           if (imgElem.loading != undefined) {
             imgElem.loading = "lazy"
