@@ -32,12 +32,6 @@ function setImgLazyLoad(result) {
       rootMargin: "0px",
       threshold: 0.5
     };
-
-
-
-    browser.runtime.sendMessage({
-      lazyDone: false
-    });
     
     // register the config object with an instance
     // of intersectionObserver
