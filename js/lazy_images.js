@@ -32,7 +32,7 @@ function setImgLazyLoad(result) {
       rootMargin: "0px",
       threshold: 0.5
     };
-    
+
     // register the config object with an instance
     // of intersectionObserver
     var obst = new IntersectionObserver(function (entries, self) {
@@ -98,6 +98,13 @@ function setImgLazyLoad(result) {
           break
 
         } else {
+
+          if (i < imgElements.length * 0.6) {
+            browser.runtime.sendMessage({
+              ourLazyLoad: true
+            });
+          }
+
 
           if (imgElem.loading != undefined) {
             imgElem.loading = "lazy"

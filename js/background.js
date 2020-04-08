@@ -59,11 +59,19 @@ function setImgLazyLoad(result) {
 
   if (result.imgLazyLoad == undefined || result.imgLazyLoad == true) {
     var lazyDone = false;
+    var ourLazyLoad = false;
     function cancel(requestDetails) {
       console.log("LAZ: ", lazyDone)
       if (!lazyDone) {
-        console.log("CANCEL: " + requestDetails.url);
-        return { cancel: true };
+        return new Promise((resolve, reject) => {
+          window.setTimeout(() => {
+            if (ourLazyLoad) {
+              resolve({ cancel: true });
+              console.log("CANCEL: " + requestDetails.url)
+            };
+            resolve()
+          }, 1000);
+        })
       }
     }
     browser.webRequest.onBeforeRequest.addListener(
@@ -72,13 +80,17 @@ function setImgLazyLoad(result) {
       ["blocking"]
     );
     browser.runtime.onMessage.addListener((request, sender, sendResponse) => {
-      lazyDone = request.lazyDone;
+      console.log("REQUE: ",request)
+      if (request.lazyDone != undefined) lazyDone = true;
+      if (request.ourLazyLoad != undefined) ourLazyLoad = request.ourLazyLoad;
       console.log("LAZY DONE:", lazyDone)
+      console.log("Out lazy:", ourLazyLoad)
     });
     function handleUpdated(tabId, changeInfo, tabInfo) {
       console.log("Changed status: ", changeInfo.status);
       if (changeInfo.status == "loading") {
         lazyDone = false;
+        ourLazyLoad = false;
       }
     }
     browser.tabs.onUpdated.addListener(handleUpdated);
