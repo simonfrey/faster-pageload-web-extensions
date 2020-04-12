@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Faster Pageload",
-  "version": "1.7.6",
+  "version": "1.7.7",
   "author": "Simon Frey",
   "developer": {
     "name": "Simon Frey",

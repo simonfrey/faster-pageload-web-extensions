@@ -60,31 +60,29 @@ function setImgLazyLoad(result) {
     var imgElements = document.querySelectorAll("img");
     console.log("[faster pageload plugin] Lazyload " + imgElements.length + " images");
 
-    var foundSrc = ""
+    var foundSrcs = {}
     var foundTimes = 0
+    var ourLazy = true;
 
     for (var i = imgElements.length - 1; i >= 0; i--) {
       var imgElem = imgElements[i];
-      if (IsImageOk(imgElem)) {
-        continue
-      }
+    
 
-      if (
-        imgElem.src != undefined &&
-        imgElem.src != "" &&
-        Object.keys(imgElem.dataset).length == 0 &&
-        imgElem.src.includes("data:") == false
-      ) {
+      // if (
+      //   imgElem.src != undefined &&
+      //   imgElem.src != "" &&
+      //   Object.keys(imgElem.dataset).length == 0 &&
+      //   imgElem.src.includes("data:") == false
+      // ) {
 
-        if (foundSrc != imgElem.src) {
-          foundSrc = imgElem.src;
-          foundTimes = 1;
-        } else {
-          foundTimes++
+        if(foundSrcs[imgElem.src]== undefined){
+          foundSrcs[imgElem.src] = 1;
         }
+        foundSrcs[imgElem.src]++;
 
+        console.log("FOUND: ",foundSrcs[imgElem.src], imgElem.src)
 
-        if (foundTimes >= 5) {
+        if (foundSrcs[imgElem.src] >= 5) {
           console.log("[faster pageload plugin] Unknown lazy load plugin found. Remove lazy load elements: ", imgElements.length - 1 - i)
           // we have apparently an unknown lazy load plugin on the site. Reset all images
           for (var j = imgElements.length - 1; j >= i; j--) {
@@ -95,15 +93,12 @@ function setImgLazyLoad(result) {
             remElem.removeAttribute("data-src-fasterpageload");
             obst.unobserve(remElem);
           }
+          ourLazy = false;
           break
 
         } else {
 
-          if (i < imgElements.length * 0.6) {
-            browser.runtime.sendMessage({
-              ourLazyLoad: true
-            });
-          }
+        
 
 
           if (imgElem.loading != undefined) {
@@ -114,13 +109,15 @@ function setImgLazyLoad(result) {
             obst.observe(imgElem);
           }
         }
-      }
+     // }
+
     }
 
 
 
     browser.runtime.sendMessage({
-      lazyDone: true
+      lazyDone: true,
+      ourLazyLoad:   ourLazy
     });
   }
 

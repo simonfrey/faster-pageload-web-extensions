@@ -46,6 +46,10 @@ browser.storage.sync.get("active").then(setInitIcon, onError);
 //
 // Real lazy loading
 
+function timeout(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 
 function onError(error) {
   alert(`faster pageload plugin: local storage error: ${error}`);
@@ -60,18 +64,27 @@ function setImgLazyLoad(result) {
   if (result.imgLazyLoad == undefined || result.imgLazyLoad == true) {
     var lazyDone = false;
     var ourLazyLoad = false;
+
+
     function cancel(requestDetails) {
       console.log("LAZ: ", lazyDone)
       if (!lazyDone) {
-        return new Promise((resolve, reject) => {
-          window.setTimeout(() => {
+        return new Promise(async (resolve, reject) => {
+          for (k = 0; k < 30; k++) {
+            await timeout(500);
             if (ourLazyLoad) {
               resolve({ cancel: true });
-              console.log("CANCEL: " + requestDetails.url)
+             // console.log("CANCEL: " + requestDetails.url)
+              return
             };
-            resolve()
-          }, 1000);
+            if (!ourLazyLoad && lazyDone) {
+              resolve({});
+            }
+          }
+            resolve({});
+          
         })
+
       }
     }
     browser.webRequest.onBeforeRequest.addListener(
@@ -80,11 +93,10 @@ function setImgLazyLoad(result) {
       ["blocking"]
     );
     browser.runtime.onMessage.addListener((request, sender, sendResponse) => {
-      console.log("REQUE: ",request)
       if (request.lazyDone != undefined) lazyDone = true;
       if (request.ourLazyLoad != undefined) ourLazyLoad = request.ourLazyLoad;
       console.log("LAZY DONE:", lazyDone)
-      console.log("Out lazy:", ourLazyLoad)
+      console.log("OUR LAZY:", ourLazyLoad)
     });
     function handleUpdated(tabId, changeInfo, tabInfo) {
       console.log("Changed status: ", changeInfo.status);
