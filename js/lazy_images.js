@@ -26,7 +26,7 @@ function setImgLazyLoad(result) {
   }
 
 
-  if (result.imgLazyLoad == undefined || result.imgLazyLoad == true) {
+  if (/*result.imgLazyLoad == undefined ||*/ result.imgLazyLoad == true) {
     const config = {
       root: null, // avoiding 'root' or setting it to 'null' sets it to default value: viewport
       rootMargin: "0px",

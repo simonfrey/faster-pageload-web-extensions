@@ -61,7 +61,7 @@ function setImgLazyLoad(result) {
     return
   }
 
-  if (result.imgLazyLoad == undefined || result.imgLazyLoad == true) {
+  if (/*result.imgLazyLoad == undefined ||*/ result.imgLazyLoad == true) {
     var lazyDone = false;
     var ourLazyLoad = false;
 
