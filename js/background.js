@@ -67,13 +67,14 @@ function setImgLazyLoad(result) {
 
 
     function cancel(requestDetails) {
-      console.log("LAZ: ", lazyDone)
-      if (!lazyDone) {
+      if (!lazyDone && requestDetails.documentUrl == requestDetails.originUrl) {
         return new Promise(async (resolve, reject) => {
           for (k = 0; k < 30; k++) {
             await timeout(500);
             if (ourLazyLoad) {
               resolve({ cancel: true });
+              console.log("CANCEL: ", requestDetails)
+
              // console.log("CANCEL: " + requestDetails.url)
               return
             };
