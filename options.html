@@ -1,6 +1,12 @@
 <!DOCTYPE html>
-
 <html>
+	<head>
+		<style>
+			note {
+				color: #777777;
+			}
+</style>
+</head>
   <head>
     <meta charset="utf-8">
   </head>
@@ -10,6 +16,9 @@
     <form>
         <div><label>Preload every visible link: <input type="checkbox" id="preloadViewport"></label></div>
         <div><label>Lazyload images: <input type="checkbox" id="imgLazyLoad"></label></div>
+        <div><label>Blacklist sites: <input type="text" id="blacklistSites" placeholder=" www.example.com, example2.com" size="21" ></label></div>
+        <div><note>Note, has to be in the format: www.example.com, example2.com</note></div>
+        <br>
         <div><button type="submit">Save</button></div>
     </form>
 
