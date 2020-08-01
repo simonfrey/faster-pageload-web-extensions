@@ -7,7 +7,7 @@ function saveOptions(e) {
     browser.storage.sync.set({
         preloadViewport: preloadViewportElement.checked,
         imgLazyLoad: imgLazyLoadElement.checked,
-        blacklistSites: blacklistSitesElement.value,
+        blacklistSites: blacklistSitesElement.value.replace(/\s+/g, '').toLowerCase(),
     });
 
     browser.runtime.reload();
