@@ -24,8 +24,8 @@ function setImgLazyLoad(result) {
     return
   }
   
-  /*This first check if blacklistSites is empty, if not then checks if the current web domain is in the blacklist, which has been split into an array*/
-  if (result.blacklistSites !== "" && result.blacklistSites.split(", ").includes(window.location.host)) {
+  /*This first check if blacklistSites is empty, if not then checks if the current web domain is in the blacklist which has been split into an array*/
+  if (result.blacklistSites !== "" && result.blacklistSites.split(",").includes(window.location.host)) {
 	  console.log("[faster pageload plugin] Site Blacklisted: Do not load instant.page script")
 	  return
   }
