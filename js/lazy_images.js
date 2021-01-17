@@ -84,7 +84,13 @@ function setImgLazyLoad(result) {
 		}
 		foundSrcs[imgElem.src]++;
 
-		console.log("FOUND: ",foundSrcs[imgElem.src], imgElem.src)
+		console.log("FOUND: ",foundSrcs[imgElem.src], imgElem.src,imgElem.loading)
+
+		if (imgElem.loading == "lazy"){
+			console.log("Found already lazy")
+			ourLazy = false;
+			break
+		}
 
 		if (foundSrcs[imgElem.src] >= 5) {
 		  console.log("[faster pageload plugin] Unknown lazy load plugin found. Remove lazy load elements: ", imgElements.length - 1 - i)
@@ -105,13 +111,9 @@ function setImgLazyLoad(result) {
 		
 
 
-		  if (imgElem.loading != undefined) {
-			imgElem.loading = "lazy"
-		  } else {
 			imgElem.setAttribute("data-src-fasterpageload", imgElem.src);
 			imgElem.src = chrome.runtime.getURL("static/rocket.svg");
 			obst.observe(imgElem);
-		  }
 		}
 	 // }
 
